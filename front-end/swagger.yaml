@@ -9,6 +9,10 @@ basePath: /api/v1
 paths:
   /user/transactions:
     get:
+      security:
+          - Bearer: []
+      tags: 
+        - Transaction module
       summary: Retrieve all transactions from specified account
       responses:
         '200':
@@ -17,8 +21,16 @@ paths:
             type: array
             items:
               $ref: '#/definitions/transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
   /user/transactions/{transactionId}:
     get:
+      security:
+          - Bearer: []
+      tags: 
+          - Transaction module
       summary: Retrieve specified transaction
       parameters:
         - name: transactionId
@@ -31,7 +43,15 @@ paths:
           description: Informations of the specified transaction
           schema:
             $ref: '#/definitions/transactionInformations'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
     put: 
+      security:
+        - Bearer: []
+      tags: 
+        - Transaction module
       summary: Update transaction information
       parameters: 
         - name: transactionId
@@ -48,7 +68,15 @@ paths:
       responses: 
         '200':
           description: Information successfully updated
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
     post: 
+      security:
+        - Bearer: []
+      tags: 
+        - Transaction module
       summary: Add transactions information
       parameters: 
         - name: transactionId
@@ -65,7 +93,15 @@ paths:
       responses:
         '200':
           description: Information successfully added
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
     delete:
+      security:
+          - Bearer: []
+      tags: 
+        - Transaction module
       summary: Remove a specific information from a transaction
       parameters:
         - name: transactionId
@@ -88,9 +124,14 @@ paths:
         '200':
           description: Successful removal of the information
         '400':
-          description: Invalid information parameter
-        '404':
-          description: Transaction not found
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 definitions:
   transaction:
     type: object
