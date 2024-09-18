@@ -10,8 +10,8 @@ paths:
   /user/transactions:
     get:
       security:
-          - Bearer: []
-      tags: 
+        - Bearer: []
+      tags:
         - Transaction module
       summary: Retrieve all transactions from specified account
       responses:
@@ -21,16 +21,16 @@ paths:
             type: array
             items:
               $ref: '#/definitions/transaction'
-        '400':
-          description: Invalid Fields
+        '401':
+          description: Invalid Token
         '500':
           description: Internal Server Error
   /user/transactions/{transactionId}:
     get:
       security:
-          - Bearer: []
-      tags: 
-          - Transaction module
+        - Bearer: []
+      tags:
+        - Transaction module
       summary: Retrieve specified transaction
       parameters:
         - name: transactionId
@@ -43,17 +43,17 @@ paths:
           description: Informations of the specified transaction
           schema:
             $ref: '#/definitions/transactionInformations'
-        '400':
-          description: Invalid Fields
+        '401':
+          description: Invalid Token
         '500':
           description: Internal Server Error
-    put: 
+    put:
       security:
         - Bearer: []
-      tags: 
+      tags:
         - Transaction module
       summary: Update transaction information
-      parameters: 
+      parameters:
         - name: transactionId
           in: path
           required: true
@@ -65,20 +65,22 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/informationToChange'
-      responses: 
+      responses:
         '200':
           description: Information successfully updated
         '400':
-          description: Invalid Fields
+          description: Invalid field
+        '401':
+          description: Invalid Token
         '500':
           description: Internal Server Error
-    post: 
+    post:
       security:
         - Bearer: []
-      tags: 
+      tags:
         - Transaction module
       summary: Add transactions information
-      parameters: 
+      parameters:
         - name: transactionId
           in: path
           required: true
@@ -94,13 +96,15 @@ paths:
         '200':
           description: Information successfully added
         '400':
-          description: Invalid Fields
+          description: Invalid field
+        '401':
+          description: Invalid Token
         '500':
           description: Internal Server Error
     delete:
       security:
-          - Bearer: []
-      tags: 
+        - Bearer: []
+      tags:
         - Transaction module
       summary: Remove a specific information from a transaction
       parameters:
@@ -123,8 +127,8 @@ paths:
       responses:
         '200':
           description: Successful removal of the information
-        '400':
-          description: Invalid Fields
+        '401':
+          description: Invalid Token
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -139,7 +143,7 @@ definitions:
       id:
         type: string
         description: Identifiant unique de la transaction
-      name: 
+      name:
         type: string
         description: Nom de la transaction
       note:
@@ -151,17 +155,17 @@ definitions:
         description: Montant de la transaction
   transactionInformations:
     type: object
-    properties: 
+    properties:
       id:
         type: string
         description: Identifiant unique de la transaction
-      name: 
+      name:
         type: string
         description: Nom de la transaction
-      category: 
+      category:
         type: string
         description: Catégorie de la transaction
-      date: 
+      date:
         type: string
         format: date
         description: Date de la transaction
@@ -174,11 +178,11 @@ definitions:
         description: Montant de la transaction
   informationToChange:
     type: object
-    properties: 
-      name: 
+    properties:
+      name:
         type: string
         description: Nom de la transaction
-      category: 
+      category:
         type: string
         description: Catégorie de la transaction
       note:
@@ -186,7 +190,7 @@ definitions:
         description: Description de la transaction
   informationToAdd:
     type: object
-    properties: 
-      information: 
+    properties:
+      information:
         type: string
         description: Nouvelle information

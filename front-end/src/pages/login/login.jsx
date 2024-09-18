@@ -34,6 +34,7 @@ const Login = () => {
     }
   }, [isConnected, navigate])
 
+  /* fonction de login */
   const logSubmit = async (e) => {
     e.preventDefault()
 
