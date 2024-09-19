@@ -19,6 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState(rememberedEmail || '')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(rememberedEmail !== '')
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (rememberedEmail) {
@@ -26,6 +27,8 @@ const Login = () => {
       setRememberMe(true)
     }
   }, [rememberedEmail])
+
+  /* redirection page profile si utilisateur connecté */
 
   useEffect(() => {
     if (isConnected) {
@@ -35,6 +38,7 @@ const Login = () => {
   }, [isConnected, navigate])
 
   /* fonction de login */
+
   const logSubmit = async (e) => {
     e.preventDefault()
 
@@ -64,7 +68,6 @@ const Login = () => {
         })
         if (profileResponse.ok) {
           const profileData = await profileResponse.json()
-          console.log(profileData)
           dispatch(
             setData({
               firstName: profileData.body.firstName,
@@ -84,6 +87,8 @@ const Login = () => {
       } else {
         console.error('Login failed')
       }
+    } else {
+      setError(true)
     }
   }
 
@@ -123,6 +128,7 @@ const Login = () => {
           <button type="submit" className="sign-in-button">
             Sign In
           </button>
+          {error && <div className="error">Email ou mot de passe invalide</div>}
         </form>
       </section>
     </main>

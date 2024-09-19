@@ -14,6 +14,7 @@ paths:
       tags:
         - Transaction module
       summary: Retrieve all transactions from specified account
+      description: View all transactions for the current month, grouped by account
       responses:
         '200':
           description: A list of transactions
@@ -32,6 +33,7 @@ paths:
       tags:
         - Transaction module
       summary: Retrieve specified transaction
+      description: View the details of a transaction in another view
       parameters:
         - name: transactionId
           in: path
@@ -53,6 +55,7 @@ paths:
       tags:
         - Transaction module
       summary: Update transaction information
+      description: Add, modify or delete information about a transaction
       parameters:
         - name: transactionId
           in: path
@@ -70,63 +73,6 @@ paths:
           description: Information successfully updated
         '400':
           description: Invalid field
-        '401':
-          description: Invalid Token
-        '500':
-          description: Internal Server Error
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction module
-      summary: Add transactions information
-      parameters:
-        - name: transactionId
-          in: path
-          required: true
-          type: string
-          description: Transaction Id
-        - name: body
-          in: body
-          description: Update payload
-          required: true
-          schema:
-            $ref: '#/definitions/informationToAdd'
-      responses:
-        '200':
-          description: Information successfully added
-        '400':
-          description: Invalid field
-        '401':
-          description: Invalid Token
-        '500':
-          description: Internal Server Error
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction module
-      summary: Remove a specific information from a transaction
-      parameters:
-        - name: transactionId
-          in: path
-          required: true
-          type: string
-          description: The ID of the transaction to update
-        - name: information
-          in: query
-          required: true
-          type: string
-          enum:
-            - name
-            - category
-            - date
-            - note
-            - information
-          description: The information to remove from the transaction
-      responses:
-        '200':
-          description: Successful removal of the information
         '401':
           description: Invalid Token
         '500':
@@ -179,18 +125,9 @@ definitions:
   informationToChange:
     type: object
     properties:
-      name:
-        type: string
-        description: Nom de la transaction
       category:
         type: string
         description: Catégorie de la transaction
       note:
         type: string
         description: Description de la transaction
-  informationToAdd:
-    type: object
-    properties:
-      information:
-        type: string
-        description: Nouvelle information

@@ -298,3 +298,10 @@ body {
     width: 200px;
   }
 }
+
+.error {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  color: red;
+}
